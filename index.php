@@ -35,7 +35,14 @@ function read_file_contents($fileinfo) {
 ###############################################################
 # START
 # Initial
-$directory = "DropsuiteTest/";        // Directory	
+
+$ini_array = parse_ini_file("config.ini"); // Parse the .ini file
+if ($ini_array['path']) {
+	$directory = $ini_array['path'];        // Directory		
+} else {
+	exit;
+}
+
 
 # initiate the first iterator
 $dir = new DirectoryIterator($directory);
@@ -53,8 +60,8 @@ foreach ($dir as $fileinfo) {
 		}
 	}	    
 }
-echo '</ol>';
 
+// Final section ---> print the max filename and occurences
 echo '<pre>';
 $arr = array_count_values(content::$array_file);
 $maxs = array_keys($arr, max($arr));
